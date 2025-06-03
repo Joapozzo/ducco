@@ -3,13 +3,31 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Colores corporativos Duccó */
+  --ducco-orange: #F24026;
+  --ducco-brown: #28110E;
+  --ducco-gray: #3B3B3B;
+  --ducco-beige: #E4DAAE;
+  --ducco-white: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-outfit);
+  --font-mono: var(--font-outfit);
+  
+  /* Colores corporativos disponibles como utilidades */
+  --color-ducco-orange: var(--ducco-orange);
+  --color-ducco-brown: var(--ducco-brown);
+  --color-ducco-gray: var(--ducco-gray);
+  --color-ducco-beige: var(--ducco-beige);
+  --color-ducco-white: var(--ducco-white);
+  
+  /* Animaciones personalizadas */
+  --animate-fade-in: fade-in 1s ease-out;
+  --animate-bounce-slow: bounce 2s infinite;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +37,84 @@
   }
 }
 
+/* Configuración base del body */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling para navegación */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Animaciones personalizadas */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+/* Scrollbar personalizada con colores Duccó */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ducco-orange);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d63516;
+}
+
+/* Mejoras para elementos interactivos */
+button, a {
+  transition: all 0.3s ease;
+}
+
+/* Utilidades adicionales para Duccó */
+.text-ducco-orange {
+  color: var(--ducco-orange);
+}
+
+.bg-ducco-orange {
+  background-color: var(--ducco-orange);
+}
+
+.text-ducco-brown {
+  color: var(--ducco-brown);
+}
+
+.bg-ducco-brown {
+  background-color: var(--ducco-brown);
+}
+
+.text-ducco-gray {
+  color: var(--ducco-gray);
+}
+
+.bg-ducco-gray {
+  background-color: var(--ducco-gray);
+}
+
+.bg-ducco-beige {
+  background-color: var(--ducco-beige);
 }
