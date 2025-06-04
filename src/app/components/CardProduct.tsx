@@ -16,6 +16,8 @@ const CardProduct = ({  producto, onProductClick }: CardProductProps) => {
                         src={producto.imagen}
                         alt={producto.nombre}
                         className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                        width={300}
+                        height={400}
                     />
                     {producto.esDestacado && (
                         <div className="absolute top-4 left-4">

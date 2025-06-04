@@ -16,6 +16,8 @@ const CardProductDestacado = ({ producto, onProductClick }: CardProductDestacado
                         src={producto.imagen}
                         alt={producto.nombre}
                         className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                        width={300}
+                        height={400}
                     />
                     <div className="absolute top-4 left-4">
                         <span className="px-3 py-1 rounded-full text-xs font-bold text-white"

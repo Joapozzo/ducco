@@ -21,7 +21,7 @@ const Header = () => {
             <nav className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="text-3xl font-black tracking-tight" style={{ color: '#F24026' }}>
-                        <Image src="/logos/logo2-ducco.svg" alt="Ducco Logo" className="lg:w-40 md:w-32 w-28 mr-4" />
+                        <Image src="/logos/logo2-ducco.svg" alt="Ducco Logo" className="lg:w-40 md:w-32 w-28 mr-4" width={28} height={28} />
                     </div>
 
                     {/* Desktop Menu */}

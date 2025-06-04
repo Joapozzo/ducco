@@ -54,11 +54,15 @@ const NosotrosSection = () => {
                                 src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=400&fit=crop"
                                 alt="Showroom 1"
                                 className="rounded-2xl shadow-2xl"
+                                width={300}
+                                height={400}
                             />
                             <Image
                                 src="https://images.unsplash.com/photo-1549497538-303791108f95?w=300&h=300&fit=crop"
                                 alt="Showroom 2"
                                 className="rounded-2xl shadow-2xl mt-12"
+                                width={300}
+                                height={400}
                             />
                         </div>
                         <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl shadow-2xl"

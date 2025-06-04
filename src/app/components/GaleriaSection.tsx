@@ -38,6 +38,8 @@ const GaleriaSection = () => {
                                 src={imagen}
                                 alt={`Ambiente ${index + 1}`}
                                 className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                                width={400}
+                                height={500}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
                                 <div className="absolute bottom-6 left-6 text-white">
