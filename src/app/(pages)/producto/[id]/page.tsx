@@ -73,7 +73,7 @@ export default function ProductoPage({ params }: PageProps) {
             {/* Breadcrumb y navegación */}
             <div className="pt-24 pb-8 px-6 bg-white border-b">
                 <div className="container mx-auto max-w-7xl">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between flex-col md:flex-row lg:flex-row gap-4">
                         <button
                             onClick={() => router.back()}
                             className="flex items-center space-x-3 transition-colors hover:opacity-80"
