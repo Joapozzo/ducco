@@ -12,7 +12,7 @@ const OfertasSection = () => {
   };
 
   return (
-    <section id="ofertas" className="py-32 px-6" style={{ backgroundColor: '#28110E' }}>
+    <section id="ofertas" className="py-16 px-6" style={{ backgroundColor: '#28110E' }}>
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-20">
           <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold tracking-wide mb-6"

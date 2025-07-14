@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const NosotrosSection = () => {
     return (
-        <section id="nosotros" className="py-32 px-6 bg-gray-50">
+        <section id="nosotros" className="py-16 px-6 bg-gray-50">
             <div className="container mx-auto max-w-7xl">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <div>

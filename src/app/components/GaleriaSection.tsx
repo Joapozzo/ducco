@@ -12,7 +12,7 @@ const GaleriaSection = () => {
     ];
 
     return (
-        <section id="galería" className="py-32 px-6" style={{ backgroundColor: '#E4DAAE' }}>
+        <section id="galería" className="py-16 px-6" style={{ backgroundColor: '#E4DAAE' }}>
             <div className="container mx-auto max-w-7xl">
                 <div className="text-center mb-20">
                     <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold tracking-wide mb-6"

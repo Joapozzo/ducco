@@ -3,12 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  
+
   /* Colores corporativos Duccó */
-  --ducco-orange: #F24026;
-  --ducco-brown: #28110E;
-  --ducco-gray: #3B3B3B;
-  --ducco-beige: #E4DAAE;
+  --ducco-orange: #f24026;
+  --ducco-orange-50: #f0cfca;
+  --ducco-orange-100: #eb7f6e;
+  --ducco-orange-200: #ee5e48;
+  --ducco-brown: #28110e;
+  --ducco-gray: #3b3b3b;
+  --ducco-beige: #e4daae;
   --ducco-white: #ffffff;
 }
 
@@ -17,14 +20,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-outfit);
   --font-mono: var(--font-outfit);
-  
+
   /* Colores corporativos disponibles como utilidades */
   --color-ducco-orange: var(--ducco-orange);
   --color-ducco-brown: var(--ducco-brown);
   --color-ducco-gray: var(--ducco-gray);
   --color-ducco-beige: var(--ducco-beige);
   --color-ducco-white: var(--ducco-white);
-  
+
   /* Animaciones personalizadas */
   --animate-fade-in: fade-in 1s ease-out;
   --animate-bounce-slow: bounce 2s infinite;
@@ -86,7 +89,8 @@ html {
 }
 
 /* Mejoras para elementos interactivos */
-button, a {
+button,
+a {
   transition: all 0.3s ease;
 }
 

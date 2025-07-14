@@ -2,7 +2,7 @@ import { Instagram, Facebook, Twitter, Users, Truck, Shield, Headphones } from '
 
 const Footer = () => {
     return (
-        <footer className="py-20 px-6" style={{ backgroundColor: '#3B3B3B' }}>
+        <footer className="py-16 px-6" style={{ backgroundColor: '#3B3B3B' }}>
             <div className="container mx-auto max-w-7xl">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
                     {/* Logo y descripción */}

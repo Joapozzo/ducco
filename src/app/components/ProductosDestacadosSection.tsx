@@ -12,7 +12,7 @@ const ProductosDestacadosSection = () => {
         router.push(`/producto/${producto.id}`);
     };
     return (
-        <section id="destacados" className="py-32 px-6" style={{ backgroundColor: 'white' }}>
+        <section id="destacados" className="py-16 px-6" style={{ backgroundColor: 'white' }}>
             <div className="container mx-auto max-w-7xl">
                 <div className="text-center mb-20">
                     <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold tracking-wide mb-6"
