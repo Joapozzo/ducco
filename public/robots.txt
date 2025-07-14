@@ -1,0 +1,30 @@
+# Robots.txt para Duccó Mueblería
+User-agent: *
+Allow: /
+
+# Permitir acceso a recursos importantes
+Allow: /logos/
+Allow: /imgs/
+Allow: /*.css
+Allow: /*.js
+
+# Bloquear archivos innecesarios
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /.well-known/
+
+# Sitemap (actualizar con tu dominio real)
+Sitemap: https://ducco.com.ar/sitemap.xml
+
+# Crawl delay para ser amigables con los bots
+Crawl-delay: 1
+
+# Configuraciones específicas para bots principales
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

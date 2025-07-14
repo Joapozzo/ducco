@@ -34,8 +34,8 @@ export default function ProductoPage({ params }: PageProps) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 mx-auto mb-4" style={{ borderColor: 'var(--color-principal)' }}></div>
-                    <p className="text-xl text-gray-600">Cargando producto...</p>
+                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 mx-auto mb-4" style={{ borderColor: 'var(--ducco-orange)' }}></div>
+                    <p className="text-xl" style={{ color: 'var(--ducco-gray)' }}>Cargando producto...</p>
                 </div>
             </div>
         );
@@ -45,12 +45,12 @@ export default function ProductoPage({ params }: PageProps) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--color-texto)' }}>Producto no encontrado</h1>
-                    <p className="text-xl text-gray-600 mb-8">El producto que buscas no existe.</p>
+                    <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--ducco-brown)' }}>Producto no encontrado</h1>
+                    <p className="text-xl mb-8" style={{ color: 'var(--ducco-gray)' }}>El producto que buscas no existe.</p>
                     <button
                         onClick={() => router.push('/')}
                         className="px-8 py-4 text-white font-bold rounded-xl hover:opacity-90 transition-all"
-                        style={{ background: 'var(--gradient-principal)' }}
+                        style={{ backgroundColor: 'var(--ducco-orange)' }}
                     >
                         Volver al inicio
                     </button>
@@ -76,27 +76,30 @@ export default function ProductoPage({ params }: PageProps) {
                     <div className="flex items-center justify-between">
                         <button
                             onClick={() => router.back()}
-                            className="flex items-center space-x-3 text-gray-600 hover:text-red-600 transition-colors"
+                            className="flex items-center space-x-3 transition-colors hover:opacity-80"
+                            style={{ color: 'var(--ducco-gray)' }}
                         >
                             <ArrowLeft className="w-5 h-5" />
                             <span className="font-semibold">Volver</span>
                         </button>
-                        <nav className="text-sm text-gray-500">
+                        <nav className="text-sm" style={{ color: 'var(--ducco-gray)' }}>
                             <span
-                                className="cursor-pointer transition-colors hover:text-red-600"
+                                className="cursor-pointer transition-colors hover:opacity-80"
+                                style={{ color: 'var(--ducco-gray)' }}
                                 onClick={() => router.push('/')}
                             >
                                 Inicio
                             </span>
                             <span className="mx-2">/</span>
                             <span
-                                className="cursor-pointer transition-colors hover:text-red-600"
+                                className="cursor-pointer transition-colors hover:opacity-80"
+                                style={{ color: 'var(--ducco-gray)' }}
                                 onClick={() => router.push('/#catálogo')}
                             >
                                 Catálogo
                             </span>
                             <span className="mx-2">/</span>
-                            <span className="font-semibold" style={{ color: 'var(--color-texto)' }}>{producto.nombre}</span>
+                            <span className="font-semibold" style={{ color: 'var(--ducco-brown)' }}>{producto.nombre}</span>
                         </nav>
                     </div>
                 </div>
@@ -118,7 +121,7 @@ export default function ProductoPage({ params }: PageProps) {
                             />
                             {producto.esDestacado && (
                                 <div className="absolute top-6 left-6">
-                                    <span className="px-4 py-2 rounded-full text-sm font-bold text-white" style={{ background: 'var(--gradient-principal)' }}>
+                                    <span className="px-4 py-2 rounded-full text-sm font-bold text-white" style={{ backgroundColor: 'var(--ducco-orange)' }}>
                                         DESTACADO
                                     </span>
                                 </div>
@@ -147,9 +150,12 @@ export default function ProductoPage({ params }: PageProps) {
                                         key={index}
                                         onClick={() => setImagenActiva(index)}
                                         className={`relative rounded-xl overflow-hidden h-20 transition-all duration-300 ${imagenActiva === index
-                                                ? 'ring-4 ring-red-600 scale-105'
-                                                : 'hover:ring-2 ring-gray-300 hover:scale-105'
+                                            ? 'ring-4 scale-105'
+                                            : 'hover:ring-2 ring-gray-300 hover:scale-105'
                                             }`}
+                                        style={{
+                                            '--tw-ring-color': imagenActiva === index ? 'var(--ducco-orange)' : undefined
+                                        } as React.CSSProperties}
                                     >
                                         <Image
                                             src={imagen}
@@ -170,17 +176,17 @@ export default function ProductoPage({ params }: PageProps) {
                         <div>
                             <span
                                 className="inline-block px-4 py-2 rounded-full text-sm font-semibold tracking-wide mb-4 text-white"
-                                style={{ background: 'var(--gradient-secundario)' }}
+                                style={{ backgroundColor: 'var(--ducco-orange-100)' }}
                             >
                                 {producto.categoria}
                             </span>
-                            <h1 className="text-4xl lg:text-5xl font-black mb-4 leading-tight" style={{ color: 'var(--color-texto)' }}>
+                            <h1 className="text-4xl lg:text-5xl font-black mb-4 leading-tight" style={{ color: 'var(--ducco-brown)' }}>
                                 {producto.nombre}
                             </h1>
-                            <p className="text-lg text-gray-600 leading-relaxed mb-4">
+                            <p className="text-lg leading-relaxed mb-4" style={{ color: 'var(--ducco-gray)' }}>
                                 {producto.descripcionCorta}
                             </p>
-                            <p className="text-base text-gray-500 leading-relaxed">
+                            <p className="text-base leading-relaxed" style={{ color: 'var(--ducco-gray)' }}>
                                 {producto.descripcionCompleta}
                             </p>
                         </div>
@@ -192,18 +198,18 @@ export default function ProductoPage({ params }: PageProps) {
                                     <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                                 ))}
                             </div>
-                            <span className="text-gray-600">(127 reseñas)</span>
+                            <span style={{ color: 'var(--ducco-gray)' }}>(127 reseñas)</span>
                         </div>
 
                         {/* Precio */}
                         <div className="py-6 border-y border-gray-200">
                             <div className="flex items-center space-x-4">
-                                <span className="text-4xl font-black" style={{ color: 'var(--color-principal)' }}>
+                                <span className="text-4xl font-black" style={{ color: 'var(--ducco-orange)' }}>
                                     {producto.precio || 'Consultar'}
                                 </span>
                                 {producto.precioAnterior && (
                                     <>
-                                        <span className="text-2xl text-gray-500 line-through">
+                                        <span className="text-2xl line-through" style={{ color: 'var(--ducco-gray)' }}>
                                             {producto.precioAnterior}
                                         </span>
                                         <span className="px-3 py-1 rounded-full text-sm font-bold text-white bg-red-500">
@@ -212,18 +218,18 @@ export default function ProductoPage({ params }: PageProps) {
                                     </>
                                 )}
                             </div>
-                            <p className="text-sm text-gray-500 mt-2">
+                            <p className="text-sm mt-2" style={{ color: 'var(--ducco-gray)' }}>
                                 Precio válido por tiempo limitado. Consultá por financiación hasta 12 cuotas sin interés.
                             </p>
                         </div>
 
                         {/* Dimensiones */}
                         <div>
-                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--color-texto)' }}>Dimensiones</h3>
-                            <div className="bg-gray-100 p-4 rounded-xl">
+                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--ducco-brown)' }}>Dimensiones</h3>
+                            <div className="p-4 rounded-xl" style={{ backgroundColor: 'var(--ducco-beige)' }}>
                                 <div className="flex items-center space-x-4">
-                                    <Ruler className="w-5 h-5" style={{ color: 'var(--color-principal)' }} />
-                                    <div className="text-gray-700">
+                                    <Ruler className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
+                                    <div style={{ color: 'var(--ducco-brown)' }}>
                                         <span className="font-semibold">Ancho:</span> {producto.dimensiones.ancho} ×
                                         <span className="font-semibold ml-2">Largo:</span> {producto.dimensiones.largo}
                                     </div>
@@ -234,9 +240,12 @@ export default function ProductoPage({ params }: PageProps) {
                         {/* Variantes */}
                         {producto.variantes && (
                             <div>
-                                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--color-texto)' }}>Variantes disponibles</h3>
-                                <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                                    <p className="text-blue-800">{producto.variantes}</p>
+                                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--ducco-brown)' }}>Variantes disponibles</h3>
+                                <div className="p-4 rounded-xl border" style={{
+                                    backgroundColor: 'var(--ducco-orange-50)',
+                                    borderColor: 'var(--ducco-orange-100)'
+                                }}>
+                                    <p style={{ color: 'var(--ducco-brown)' }}>{producto.variantes}</p>
                                 </div>
                             </div>
                         )}
@@ -244,55 +253,55 @@ export default function ProductoPage({ params }: PageProps) {
                         {/* Características adicionales */}
                         {producto.caracteristicasAdicionales && (
                             <div>
-                                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--color-texto)' }}>Características especiales</h3>
+                                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--ducco-brown)' }}>Características especiales</h3>
                                 <div className="bg-white p-6 rounded-xl shadow-sm border">
-                                    <p className="text-gray-700 leading-relaxed">{producto.caracteristicasAdicionales}</p>
+                                    <p className="leading-relaxed" style={{ color: 'var(--ducco-gray)' }}>{producto.caracteristicasAdicionales}</p>
                                 </div>
                             </div>
                         )}
 
                         {/* Beneficios adicionales */}
                         <div>
-                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--color-texto)' }}>Beneficios incluidos</h3>
+                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--ducco-brown)' }}>Beneficios incluidos</h3>
                             <div className="grid grid-cols-1 gap-3">
                                 <div className="flex items-center space-x-3">
-                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-principal)' }} />
-                                    <span className="text-gray-700">Entrega e instalación incluida</span>
+                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Entrega e instalación incluida</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-principal)' }} />
-                                    <span className="text-gray-700">Garantía extendida de fábrica</span>
+                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Garantía extendida de fábrica</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-principal)' }} />
-                                    <span className="text-gray-700">Asesoramiento personalizado gratuito</span>
+                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Asesoramiento personalizado gratuito</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-principal)' }} />
-                                    <span className="text-gray-700">Fabricación artesanal con materiales premium</span>
+                                    <Check className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Fabricación artesanal con materiales premium</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Información adicional */}
                         <div className="bg-white p-6 rounded-2xl shadow-lg">
-                            <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--color-texto)' }}>Información de entrega</h3>
-                            <div className="space-y-3 text-sm text-gray-600">
+                            <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--ducco-brown)' }}>Información de entrega</h3>
+                            <div className="space-y-3 text-sm">
                                 <div className="flex items-center space-x-3">
-                                    <Truck className="w-5 h-5" style={{ color: 'var(--color-principal)' }} />
-                                    <span>Envío gratuito en Córdoba Capital y Gran Córdoba</span>
+                                    <Truck className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Envío gratuito en Córdoba Capital y Gran Córdoba</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Shield className="w-5 h-5" style={{ color: 'var(--color-principal)' }} />
-                                    <span>Garantía extendida de 2 años</span>
+                                    <Shield className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Garantía extendida de 2 años</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Headphones className="w-5 h-5" style={{ color: 'var(--color-principal)' }} />
-                                    <span>Atención personalizada especializada</span>
+                                    <Headphones className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>Atención personalizada especializada</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
-                                    <Package className="w-5 h-5" style={{ color: 'var(--color-principal)' }} />
-                                    <span>{producto.stock} unidades disponibles en stock</span>
+                                    <Package className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
+                                    <span style={{ color: 'var(--ducco-gray)' }}>{producto.stock} unidades disponibles en stock</span>
                                 </div>
                             </div>
                         </div>
@@ -302,7 +311,7 @@ export default function ProductoPage({ params }: PageProps) {
                 {/* Productos relacionados */}
                 {productosRelacionados.length > 0 && (
                     <div className="mt-20">
-                        <h2 className="text-3xl font-black mb-12 text-center" style={{ color: 'var(--color-texto)' }}>
+                        <h2 className="text-3xl font-black mb-12 text-center" style={{ color: 'var(--ducco-brown)' }}>
                             Productos Relacionados
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
