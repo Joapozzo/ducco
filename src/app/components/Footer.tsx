@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Twitter, Users, Truck, Shield, Headphones, Phone } from 'lucide-react';
+import { Instagram, Facebook, Users, Truck, Shield, Headphones, Phone } from 'lucide-react';
 import Image from 'next/image';
 
 const Footer = () => {
