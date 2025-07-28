@@ -1,11 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from 'lucide-react';
 import Image from "next/image";
 
 const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
+    
+    // Detectar si estamos en una página de producto
+    const isProductPage = pathname?.startsWith('/producto');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -15,23 +20,19 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Cerrar menú al hacer scroll
-    useEffect(() => {
-        if (isMobileMenuOpen) {
-            setIsMobileMenuOpen(false);
-        }
-    }, [isScrolled]);
+    // Determinar si el navbar debe tener fondo naranja
+    const shouldShowOrangeNavbar = isScrolled || isProductPage;
 
     return (
         <header 
             className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-                isScrolled 
+                shouldShowOrangeNavbar 
                     ? 'shadow-xl' 
                     : 'bg-transparent'
             }`}
             style={{
-                backgroundColor: isScrolled ? 'var(--ducco-orange)' : 'transparent',
-                backdropFilter: isScrolled ? 'blur(20px)' : 'none'
+                backgroundColor: shouldShowOrangeNavbar ? 'var(--ducco-orange)' : 'transparent',
+                backdropFilter: shouldShowOrangeNavbar ? 'blur(20px)' : 'none'
             }}
         >
             <nav className="container mx-auto px-6 py-4">
@@ -41,22 +42,29 @@ const Header = () => {
                         <Image 
                             src="/logos/logo2-ducco.svg" 
                             alt="Ducco Logo" 
-                            className={`lg:w-40 md:w-32 w-28 mr-4 transition-all duration-300 ${
-                                isScrolled ? 'brightness-0 invert' : ''
+                            className={`lg:w-40 md:w-32 w-28 mr-4 transition-all duration-300 cursor-pointer ${
+                                shouldShowOrangeNavbar ? 'brightness-0 invert' : ''
                             }`} 
                             width={160} 
                             height={40} 
+                            onClick={() => {
+                                if (isProductPage) {
+                                    window.location.href = '/';
+                                } else {
+                                    document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }}
                         />
                     </div>
-
+                    
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center space-x-10">
                         {['Inicio', 'Nosotros', 'Destacados', 'Catálogo', 'Ofertas', 'Galería', 'Contacto'].map((item) => (
                             <a
                                 key={item}
-                                href={`#${item.toLowerCase()}`}
+                                href={isProductPage ? `/#${item.toLowerCase()}` : `#${item.toLowerCase()}`}
                                 className={`font-medium text-md tracking-wide transition-all duration-300 hover:scale-105 relative group ${
-                                    isScrolled 
+                                    shouldShowOrangeNavbar 
                                         ? 'text-white hover:text-orange-200' 
                                         : 'text-white hover:text-orange-300'
                                 }`}
@@ -64,7 +72,7 @@ const Header = () => {
                                 {item}
                                 <span 
                                     className={`absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                                        isScrolled 
+                                        shouldShowOrangeNavbar 
                                             ? 'bg-white' 
                                             : 'bg-gradient-to-r from-orange-400 to-orange-600'
                                     }`}
@@ -72,61 +80,62 @@ const Header = () => {
                             </a>
                         ))}
                     </div>
-
+                    
                     {/* Mobile Menu Button */}
                     <button
-                        className="lg:hidden p-2 rounded-lg transition-all duration-300 hover:bg-white/10 relative z-50"
+                        className="lg:hidden p-2 rounded-lg transition-all duration-300 hover:bg-white/10 relative z-[100]"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
                         {isMobileMenuOpen ?
                             <X className="w-6 h-6 text-white" /> :
-                            <Menu className={`w-6 h-6 ${isScrolled ? 'text-white' : 'text-white'}`} />
+                            <Menu className={`w-6 h-6 ${shouldShowOrangeNavbar ? 'text-white' : 'text-white'}`} />
                         }
                     </button>
                 </div>
             </nav>
-
+            
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div 
-                    className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                    className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]"
                     onClick={() => setIsMobileMenuOpen(false)}
                 />
             )}
-
+            
             {/* Mobile Menu */}
             <div 
-                className={`lg:hidden fixed top-0 right-0 h-full w-80 max-w-[85vw] z-40 transform transition-transform duration-300 ease-in-out ${
+                className={`lg:hidden fixed top-0 right-0 h-screen w-80 max-w-[85vw] z-[70] transform transition-transform duration-300 ease-in-out ${
                     isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                 }`}
-                style={{ backgroundColor: 'var(--ducco-orange)' }}
+                style={{ 
+                    backgroundColor: 'var(--ducco-orange)',
+                    position: 'fixed',
+                    top: '0',
+                    bottom: '0'
+                }}
             >
                 <div className="flex flex-col h-full">
                     {/* Header del menú */}
-                    <div className="p-6 border-b border-white/20">
-                        <div className="flex items-center justify-between">
+                    <div className="p-6 border-b border-white/20 pt-16">
+                        <div className="flex items-center justify-center">
                             <Image 
                                 src="/logos/logo2-ducco.svg" 
                                 alt="Ducco Logo" 
-                                className="w-24 brightness-0 invert" 
-                                width={96} 
-                                height={24} 
+                                className="w-32 brightness-0 invert" 
+                                width={128} 
+                                height={32} 
                             />
                         </div>
                     </div>
-
+                    
                     {/* Navigation Links */}
                     <div className="flex-1 overflow-y-auto p-6">
-                        <nav className="space-y-1">
-                            {['Inicio', 'Nosotros', 'Destacados', 'Catálogo', 'Ofertas', 'Galería', 'Contacto'].map((item, index) => (
+                        <nav className="space-y-2">
+                            {['Inicio', 'Nosotros', 'Destacados', 'Catálogo', 'Ofertas', 'Galería', 'Contacto'].map((item) => (
                                 <a
                                     key={item}
-                                    href={`#${item.toLowerCase()}`}
+                                    href={isProductPage ? `/#${item.toLowerCase()}` : `#${item.toLowerCase()}`}
                                     className="group flex items-center px-4 py-4 text-white hover:bg-white/10 rounded-xl font-medium transition-all duration-300 transform hover:translate-x-2"
-                                    style={{ 
-                                        animationDelay: `${index * 50}ms`,
-                                        animation: isMobileMenuOpen ? 'slideInFromRight 0.3s ease-out forwards' : 'none'
-                                    }}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <span className="text-lg">{item}</span>
@@ -139,16 +148,17 @@ const Header = () => {
                             ))}
                         </nav>
                     </div>
-
+                    
                     {/* Footer del menú */}
                     <div className="p-6 border-t border-white/20">
                         <div className="text-center">
-                            <p className="text-white/80 text-sm">
+                            <p className="text-white/80 text-sm mb-3">
                                 ¿Necesitás ayuda?
                             </p>
                             <button 
-                                className="mt-2 px-4 py-2 bg-white text-orange-600 rounded-lg font-semibold text-sm hover:bg-orange-50 transition-colors"
+                                className="px-6 py-3 bg-white text-orange-600 rounded-lg font-semibold text-sm hover:bg-orange-50 transition-colors"
                                 style={{ color: 'var(--ducco-orange)' }}
+                                onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Contactanos
                             </button>
@@ -156,20 +166,6 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Animaciones CSS */}
-            <style jsx>{`
-                @keyframes slideInFromRight {
-                    from {
-                        opacity: 0;
-                        transform: translateX(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-                }
-            `}</style>
         </header>
     );
 };

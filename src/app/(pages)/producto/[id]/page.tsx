@@ -7,6 +7,7 @@ import { productos } from '../../../data/ProductStatic';
 import CardProduct from '../../../components/CardProduct';
 import { Producto } from '@/app/types/productType';
 import Image from 'next/image';
+import PrecioSection from '@/app/components/PrecioSection';
 
 type PageProps = {
     params: Promise<{ id: string }>;
@@ -71,7 +72,7 @@ export default function ProductoPage({ params }: PageProps) {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Breadcrumb y navegación */}
-            <div className="pt-24 pb-8 px-6 bg-white border-b">
+            <div className="pt-30 pb-8 px-6 bg-white border-b">
                 <div className="container mx-auto max-w-7xl">
                     <div className="flex items-start justify-between flex-col md:flex-row lg:flex-row gap-4">
                         <button
@@ -202,7 +203,7 @@ export default function ProductoPage({ params }: PageProps) {
                         </div>
 
                         {/* Precio */}
-                        <div className="py-6 border-y border-gray-200">
+                        {/* <div className="py-6 border-y border-gray-200">
                             <div className="flex items-center space-x-4">
                                 <span className="text-4xl font-black" style={{ color: 'var(--ducco-orange)' }}>
                                     {producto.precio || 'Consultar'}
@@ -221,7 +222,8 @@ export default function ProductoPage({ params }: PageProps) {
                             <p className="text-sm mt-2" style={{ color: 'var(--ducco-gray)' }}>
                                 Precio válido por tiempo limitado. Consultá por financiación hasta 12 cuotas sin interés.
                             </p>
-                        </div>
+                        </div> */}
+                        <PrecioSection producto={producto} />
 
                         {/* Dimensiones */}
                         <div>

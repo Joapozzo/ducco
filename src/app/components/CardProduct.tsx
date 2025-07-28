@@ -7,6 +7,7 @@ interface CardProductProps {
     onProductClick?: (producto: Producto) => void;
 }
 
+
 const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
     return (
         <div key={producto.id} className="group cursor-pointer" onClick={() => onProductClick && onProductClick(producto)}>
@@ -19,7 +20,7 @@ const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
                         width={300}
                         height={400}
                     />
-                    
+
                     {/* Badges superiores */}
                     <div className="absolute top-4 left-4 flex flex-col gap-2">
                         {producto.esDestacado && (
@@ -36,7 +37,7 @@ const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
                     </div>
 
                     {/* Botón favorito */}
-                    <button 
+                    <button
                         className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300"
                         onClick={(e) => {
                             e.stopPropagation();
@@ -48,9 +49,8 @@ const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
 
                     {/* Indicador de stock */}
                     <div className="absolute bottom-4 right-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1 ${
-                            producto.stock > 5 ? 'bg-green-500' : producto.stock > 0 ? 'bg-yellow-500' : 'bg-red-500'
-                        }`}>
+                        <span className={`px-2 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1 ${producto.stock > 5 ? 'bg-green-500' : producto.stock > 0 ? 'bg-yellow-500' : 'bg-red-500'
+                            }`}>
                             <Package className="w-3 h-3" />
                             {producto.stock > 0 ? `${producto.stock} disponibles` : 'Sin stock'}
                         </span>
@@ -72,15 +72,15 @@ const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
                         {/* Dimensiones */}
                         <div className="mb-4">
                             <div className="flex items-center gap-2 mb-2">
-                                <span className="inline-block rounded-full px-3 py-1 text-xs text-center" style={{ 
-                                    backgroundColor: 'var(--ducco-beige)', 
-                                    color: 'var(--ducco-brown)' 
+                                <span className="inline-block rounded-full px-3 py-1 text-xs text-center" style={{
+                                    backgroundColor: 'var(--ducco-beige)',
+                                    color: 'var(--ducco-brown)'
                                 }}>
                                     {producto.dimensiones.ancho} × {producto.dimensiones.largo}
                                 </span>
                                 {producto.variantes && (
-                                    <span className="inline-block rounded-full px-3 py-1 text-xs text-white text-center" style={{ 
-                                        backgroundColor: 'var(--ducco-orange-100)' 
+                                    <span className="inline-block rounded-full px-3 py-1 text-xs text-white text-center" style={{
+                                        backgroundColor: 'var(--ducco-orange-100)'
                                     }}>
                                         Variantes disponibles
                                     </span>
@@ -100,7 +100,7 @@ const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
                                 </div>
                             )}
                         </div>
-                        <button 
+                        <button
                             className="p-3 rounded-full transition-all duration-300 hover:scale-110 text-white"
                             style={{ backgroundColor: 'var(--ducco-orange)' }}
                         >

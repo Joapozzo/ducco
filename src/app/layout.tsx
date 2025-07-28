@@ -85,16 +85,15 @@ export const metadata: Metadata = {
   // Icons y Favicon
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logos/logo2-ducco.svg", type: "image/svg+xml" },
+      { url: "/logo.svg", sizes: "any" },
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/logo.svg", sizes: "180x180", type: "image/png" },
     ],
     other: [
       {
         rel: "mask-icon",
-        url: "/logos/logo2-ducco.svg",
+        url: "/logo.svg",
         color: "#f24026",
       },
     ],
