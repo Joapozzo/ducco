@@ -6,6 +6,7 @@ const VideosSection = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [videosVisible, setVideosVisible] = useState(false);
     const [ctaVisible, setCtaVisible] = useState(false);
+    const [videoErrors, setVideoErrors] = useState<{ [key: number]: boolean }>({});
     const sectionRef = useRef(null);
     const [videosMuted, setVideosMuted] = useState<{ [key: number]: boolean }>({
         0: true,
@@ -15,6 +16,8 @@ const VideosSection = () => {
         4: true
     });
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+    const URI_BASE_VIDEOS = process.env.NEXT_PUBLIC_CLOUDINARY_VIDEOS_BASE;
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -37,52 +40,111 @@ const VideosSection = () => {
 
     const videosData = [
         {
-            src: "/videos/video-1.mp4",
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-1`,
+            fallback: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=600&fit=crop&crop=center",
             titulo: "Transformación Moderna",
             descripcion: "Espacios contemporáneos"
         },
         {
-            src: "/videos/video-2.mp4",
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-2`,
+            fallback: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=600&fit=crop&crop=center",
             titulo: "Diseño Minimalista",
             descripcion: "Elegancia en cada detalle"
         },
         {
-            src: "/videos/video-3.mp4",
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-3`,
+            fallback: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=600&fit=crop&crop=center",
             titulo: "Ambientes Únicos",
             descripcion: "Personalidad en cada rincón"
         },
         {
-            src: "/videos/video-4.mp4",
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-4`,
+            fallback: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=600&fit=crop&crop=center",
             titulo: "Estilo Premium",
             descripcion: "Lujo y comodidad"
         },
         {
-            src: "/videos/video-5.mp4",
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-5`,
+            fallback: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=400&h=600&fit=crop&crop=center",
             titulo: "Estilo Premium",
             descripcion: "Lujo y comodidad"
         },
     ];
 
+    const handleVideoError = (index: number) => {
+        console.warn(`Video ${index + 1} no disponible, mostrando imagen de fallback`);
+        setVideoErrors(prev => ({ ...prev, [index]: true }));
+    };
+
+    const handleVideoLoad = (index: number) => {
+        setVideoErrors(prev => ({ ...prev, [index]: false }));
+    };
+
     const handleVideoHover = (index: number) => {
         setVideoActivo(index);
-        if (videoRefs.current[index]) {
-            videoRefs.current[index]?.play();
+        if (videoRefs.current[index] && !videoErrors[index]) {
+            const playPromise = videoRefs.current[index]?.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.warn(`Error playing video ${index + 1}:`, error);
+                    handleVideoError(index);
+                });
+            }
         }
     };
 
     const handleVideoLeave = (index: number) => {
         setVideoActivo(null);
-        if (videoRefs.current[index]) {
+        if (videoRefs.current[index] && !videoErrors[index]) {
             videoRefs.current[index]?.pause();
         }
     };
 
     const toggleMute = (index: number, e: React.MouseEvent) => {
         e.stopPropagation();
-        setVideosMuted(prev => ({
-            ...prev,
-            [index]: !prev[index]
-        }));
+        if (!videoErrors[index]) {
+            setVideosMuted(prev => ({
+                ...prev,
+                [index]: !prev[index]
+            }));
+        }
+    };
+
+    const renderMediaContent = (videoData: any, index: number) => {
+        if (videoErrors[index]) {
+            // Mostrar imagen de fallback si hay error con el video
+            return (
+                <div className="relative w-full h-full">
+                    <img
+                        src={videoData.fallback}
+                        alt={videoData.titulo}
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                    />
+                    {/* Overlay que simula video */}
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <div className="bg-white/90 p-3 rounded-full">
+                            <span className="text-2xl">📸</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <video
+                ref={(el) => {
+                    videoRefs.current[index] = el;
+                }}
+                src={videoData.src}
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                muted={videosMuted[index]}
+                loop
+                playsInline
+                preload="metadata"
+                onError={() => handleVideoError(index)}
+                onLoadedData={() => handleVideoLoad(index)}
+            />
+        );
     };
 
     return (
@@ -103,8 +165,6 @@ const VideosSection = () => {
                     }`}
                 style={{ backgroundColor: "#28110E" }}
             ></div>
-
-            {/* Elemento decorativo adicional */}
             <div
                 className={`absolute top-1/2 left-10 w-6 h-6 rounded-full opacity-5 transform transition-all duration-3000 delay-500 ${isVisible ? 'translate-y-0 rotate-180' : '-translate-y-20 rotate-0'
                     }`}
@@ -145,7 +205,7 @@ const VideosSection = () => {
                 </div>
 
                 {/* Grid responsivo y simétrico con animaciones direccionales */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 auto-rows-fr">
+<div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:auto-rows-fr">
                     {/* Video 1 - Grande entrada desde la izquierda */}
                     <div className={`lg:col-span-1 lg:row-span-3 relative group transform transition-all duration-1000 ${videosVisible
                         ? 'translate-x-0 opacity-100 scale-100'
@@ -157,16 +217,8 @@ const VideosSection = () => {
                             onMouseEnter={() => handleVideoHover(0)}
                             onMouseLeave={() => handleVideoLeave(0)}
                         >
-                            <video
-                                ref={(el) => {
-                                    videoRefs.current[0] = el;
-                                }}
-                                src={videosData[0].src}
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                muted={videosMuted[0]}
-                                loop
-                                playsInline
-                            />
+                            {renderMediaContent(videosData[0], 0)}
+
                             {/* Overlay dinámico con animación */}
                             <div
                                 className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-all duration-500 ${videoActivo === 0 ? "opacity-100 " : "opacity-0"
@@ -190,15 +242,17 @@ const VideosSection = () => {
                                     </div>
                                 </div>
                                 {/* Botón de sonido animado */}
-                                <button
-                                    onClick={(e) => toggleMute(0, e)}
-                                    className={`absolute top-3 md:top-6 right-3 md:right-6 bg-white/20  p-2 md:p-3 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12 ${videoActivo === 0 ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-70'
-                                        }`}
-                                >
-                                    <span className="text-sm md:text-base">
-                                        {videosMuted[0] ? "🔇" : "🔊"}
-                                    </span>
-                                </button>
+                                {!videoErrors[0] && (
+                                    <button
+                                        onClick={(e) => toggleMute(0, e)}
+                                        className={`absolute top-3 md:top-6 right-3 md:right-6 bg-white/20 p-2 md:p-3 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12 ${videoActivo === 0 ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-70'
+                                            }`}
+                                    >
+                                        <span className="text-sm md:text-base">
+                                            {videosMuted[0] ? "🔇" : "🔊"}
+                                        </span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -214,16 +268,8 @@ const VideosSection = () => {
                             onMouseEnter={() => handleVideoHover(1)}
                             onMouseLeave={() => handleVideoLeave(1)}
                         >
-                            <video
-                                ref={(el) => {
-                                    videoRefs.current[1] = el;
-                                }}
-                                src={videosData[1].src}
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                muted={videosMuted[1]}
-                                loop
-                                playsInline
-                            />
+                            {renderMediaContent(videosData[1], 1)}
+
                             <div
                                 className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent transition-all duration-500 ${videoActivo === 1 ? "opacity-100 " : "opacity-0"
                                     }`}
@@ -237,14 +283,16 @@ const VideosSection = () => {
                                         {videosData[1].descripcion}
                                     </p>
                                 </div>
-                                <button
-                                    onClick={(e) => toggleMute(1, e)}
-                                    className="absolute top-3 md:top-4 right-3 md:right-4 bg-white/20  p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
-                                >
-                                    <span className="text-sm">
-                                        {videosMuted[1] ? "🔇" : "🔊"}
-                                    </span>
-                                </button>
+                                {!videoErrors[1] && (
+                                    <button
+                                        onClick={(e) => toggleMute(1, e)}
+                                        className="absolute top-3 md:top-4 right-3 md:right-4 bg-white/20 p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
+                                    >
+                                        <span className="text-sm">
+                                            {videosMuted[1] ? "🔇" : "🔊"}
+                                        </span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -260,16 +308,8 @@ const VideosSection = () => {
                             onMouseEnter={() => handleVideoHover(2)}
                             onMouseLeave={() => handleVideoLeave(2)}
                         >
-                            <video
-                                ref={(el) => {
-                                    videoRefs.current[2] = el;
-                                }}
-                                src={videosData[2].src}
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                muted={videosMuted[2]}
-                                loop
-                                playsInline
-                            />
+                            {renderMediaContent(videosData[2], 2)}
+
                             <div
                                 className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent transition-all duration-500 ${videoActivo === 2 ? "opacity-100 " : "opacity-0"
                                     }`}
@@ -283,14 +323,16 @@ const VideosSection = () => {
                                         {videosData[2].descripcion}
                                     </p>
                                 </div>
-                                <button
-                                    onClick={(e) => toggleMute(2, e)}
-                                    className="absolute top-3 right-3 bg-white/20  p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
-                                >
-                                    <span className="text-sm">
-                                        {videosMuted[2] ? "🔇" : "🔊"}
-                                    </span>
-                                </button>
+                                {!videoErrors[2] && (
+                                    <button
+                                        onClick={(e) => toggleMute(2, e)}
+                                        className="absolute top-3 right-3 bg-white/20 p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
+                                    >
+                                        <span className="text-sm">
+                                            {videosMuted[2] ? "🔇" : "🔊"}
+                                        </span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -306,16 +348,8 @@ const VideosSection = () => {
                             onMouseEnter={() => handleVideoHover(3)}
                             onMouseLeave={() => handleVideoLeave(3)}
                         >
-                            <video
-                                ref={(el) => {
-                                    videoRefs.current[3] = el;
-                                }}
-                                src={videosData[3].src}
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                muted={videosMuted[3]}
-                                loop
-                                playsInline
-                            />
+                            {renderMediaContent(videosData[3], 3)}
+
                             <div
                                 className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent transition-all duration-500 ${videoActivo === 3 ? "opacity-100 " : "opacity-0"
                                     }`}
@@ -329,14 +363,16 @@ const VideosSection = () => {
                                         {videosData[3].descripcion}
                                     </p>
                                 </div>
-                                <button
-                                    onClick={(e) => toggleMute(3, e)}
-                                    className="absolute top-3 right-3 bg-white/20  p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
-                                >
-                                    <span className="text-sm">
-                                        {videosMuted[3] ? "🔇" : "🔊"}
-                                    </span>
-                                </button>
+                                {!videoErrors[3] && (
+                                    <button
+                                        onClick={(e) => toggleMute(3, e)}
+                                        className="absolute top-3 right-3 bg-white/20 p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
+                                    >
+                                        <span className="text-sm">
+                                            {videosMuted[3] ? "🔇" : "🔊"}
+                                        </span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -352,16 +388,8 @@ const VideosSection = () => {
                             onMouseEnter={() => handleVideoHover(4)}
                             onMouseLeave={() => handleVideoLeave(4)}
                         >
-                            <video
-                                ref={(el) => {
-                                    videoRefs.current[4] = el;
-                                }}
-                                src={videosData[4].src}
-                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                muted={videosMuted[4]}
-                                loop
-                                playsInline
-                            />
+                            {renderMediaContent(videosData[4], 4)}
+
                             <div
                                 className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent transition-all duration-500 ${videoActivo === 4 ? "opacity-100 " : "opacity-0"
                                     }`}
@@ -375,14 +403,16 @@ const VideosSection = () => {
                                         {videosData[4].descripcion}
                                     </p>
                                 </div>
-                                <button
-                                    onClick={(e) => toggleMute(4, e)}
-                                    className="absolute top-3 right-3 bg-white/20  p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
-                                >
-                                    <span className="text-sm">
-                                        {videosMuted[4] ? "🔇" : "🔊"}
-                                    </span>
-                                </button>
+                                {!videoErrors[4] && (
+                                    <button
+                                        onClick={(e) => toggleMute(4, e)}
+                                        className="absolute top-3 right-3 bg-white/20 p-2 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110 hover:rotate-12"
+                                    >
+                                        <span className="text-sm">
+                                            {videosMuted[4] ? "🔇" : "🔊"}
+                                        </span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
