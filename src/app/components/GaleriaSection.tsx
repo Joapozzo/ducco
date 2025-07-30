@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
 // Galería de Videos Verticales Dinámica
@@ -110,15 +111,17 @@ const VideosSection = () => {
         }
     };
 
-    const renderMediaContent = (videoData: any, index: number) => {
+    const renderMediaContent = (videoData: { src: string; fallback: string; titulo: string; descripcion: string }, index: number) => {
         if (videoErrors[index]) {
             // Mostrar imagen de fallback si hay error con el video
             return (
                 <div className="relative w-full h-full">
-                    <img
+                    <Image
                         src={videoData.fallback}
                         alt={videoData.titulo}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                        width={400}
+                        height={600}
                     />
                     {/* Overlay que simula video */}
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
@@ -205,7 +208,7 @@ const VideosSection = () => {
                 </div>
 
                 {/* Grid responsivo y simétrico con animaciones direccionales */}
-<div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:auto-rows-fr">
+                <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:auto-rows-fr">
                     {/* Video 1 - Grande entrada desde la izquierda */}
                     <div className={`lg:col-span-1 lg:row-span-3 relative group transform transition-all duration-1000 ${videosVisible
                         ? 'translate-x-0 opacity-100 scale-100'
