@@ -27,7 +27,7 @@ const VideosSection = () => {
         const checkMobile = () => {
             setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
         };
-        
+
         checkMobile();
         window.addEventListener('resize', checkMobile);
 
@@ -37,7 +37,7 @@ const VideosSection = () => {
                     setIsVisible(true);
                     setTimeout(() => setVideosVisible(true), 800);
                     setTimeout(() => setCtaVisible(true), 1600);
-                    
+
                     // Intentar reproducir videos automáticamente cuando sea visible
                     setTimeout(() => {
                         videoRefs.current.forEach((video, index) => {
@@ -107,7 +107,7 @@ const VideosSection = () => {
 
     const handleVideoLoadedData = (index: number) => {
         setVideosLoaded(prev => ({ ...prev, [index]: true }));
-        
+
         // En móviles, intentar reproducir inmediatamente después de cargar
         if (isMobile && videoRefs.current[index]) {
             const video = videoRefs.current[index];
@@ -194,21 +194,20 @@ const VideosSection = () => {
                 muted={videosMuted[index]}
                 loop
                 playsInline
-                autoPlay={true} // Habilitar autoplay
+                autoPlay
                 preload={isMobile ? "auto" : "metadata"} // preload auto en móviles
                 onError={() => handleVideoError(index)}
                 onLoadedData={() => handleVideoLoadedData(index)}
-                onCanPlay={() => { // Evento adicional para asegurar reproducción
-                    if (isMobile && videoRefs.current[index]) {
-                        const video = videoRefs.current[index];
-                        if (video && video.paused) {
-                            video.play().catch(console.log);
-                        }
+                onCanPlay={() => {
+                    if (isMobile && videoRefs.current[index]?.paused) {
+                        videoRefs.current[index]
+                            .play()
+                            .catch((err) => console.log("Autoplay bloqueado:", err));
                     }
                 }}
             />
         );
-    };
+    }
 
     return (
         <section
