@@ -69,31 +69,31 @@ const VideosSection = () => {
 
     const videosData = [
         {
-            src: `${URI_BASE_VIDEOS}portfolio-videos/video-1`,
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-1.mp4`,
             fallback: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=600&fit=crop&crop=center",
             titulo: "Transformación Moderna",
             descripcion: "Espacios contemporáneos"
         },
         {
-            src: `${URI_BASE_VIDEOS}portfolio-videos/video-2`,
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-2.mp4`,
             fallback: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=600&fit=crop&crop=center",
             titulo: "Diseño Minimalista",
             descripcion: "Elegancia en cada detalle"
         },
         {
-            src: `${URI_BASE_VIDEOS}portfolio-videos/video-3`,
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-3.mp4`,
             fallback: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=600&fit=crop&crop=center",
             titulo: "Ambientes Únicos",
             descripcion: "Personalidad en cada rincón"
         },
         {
-            src: `${URI_BASE_VIDEOS}portfolio-videos/video-4`,
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-4.mp4`,
             fallback: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=600&fit=crop&crop=center",
             titulo: "Estilo Premium",
             descripcion: "Lujo y comodidad"
         },
         {
-            src: `${URI_BASE_VIDEOS}portfolio-videos/video-5`,
+            src: `${URI_BASE_VIDEOS}portfolio-videos/video-5.mp4`,
             fallback: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=400&h=600&fit=crop&crop=center",
             titulo: "Estilo Premium",
             descripcion: "Lujo y comodidad"
@@ -191,7 +191,7 @@ const VideosSection = () => {
                 }}
                 src={videoData.src}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                muted={true} // Siempre muted para permitir autoplay
+                muted={videosMuted[index]}
                 loop
                 playsInline
                 autoPlay={true} // Habilitar autoplay
