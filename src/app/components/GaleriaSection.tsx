@@ -1,13 +1,15 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
-// Galería de Videos Verticales Dinámica
+// Galería de Videos Verticales Dinámica - CORREGIDO PARA MÓVILES
 const VideosSection = () => {
     const [videoActivo, setVideoActivo] = useState<number | null>(null);
     const [isVisible, setIsVisible] = useState(false);
     const [videosVisible, setVideosVisible] = useState(false);
     const [ctaVisible, setCtaVisible] = useState(false);
     const [videoErrors, setVideoErrors] = useState<{ [key: number]: boolean }>({});
+    const [isMobile, setIsMobile] = useState(false);
+    const [videosLoaded, setVideosLoaded] = useState<{ [key: number]: boolean }>({});
     const sectionRef = useRef(null);
     const [videosMuted, setVideosMuted] = useState<{ [key: number]: boolean }>({
         0: true,
@@ -21,12 +23,35 @@ const VideosSection = () => {
     const URI_BASE_VIDEOS = process.env.NEXT_PUBLIC_CLOUDINARY_VIDEOS_BASE;
 
     useEffect(() => {
+        // Detectar móvil
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
                     setTimeout(() => setVideosVisible(true), 800);
                     setTimeout(() => setCtaVisible(true), 1600);
+                    
+                    // Intentar reproducir videos automáticamente cuando sea visible
+                    setTimeout(() => {
+                        videoRefs.current.forEach((video, index) => {
+                            if (video && !videoErrors[index]) {
+                                video.load(); // Forzar carga
+                                const playPromise = video.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(error => {
+                                        console.log(`Video ${index} autoplay bloqueado:`, error);
+                                    });
+                                }
+                            }
+                        });
+                    }, 1000);
                 }
             },
             { threshold: 0.1 }
@@ -36,8 +61,11 @@ const VideosSection = () => {
             observer.observe(sectionRef.current);
         }
 
-        return () => observer.disconnect();
-    }, []);
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('resize', checkMobile);
+        };
+    }, [videoErrors]);
 
     const videosData = [
         {
@@ -77,26 +105,51 @@ const VideosSection = () => {
         setVideoErrors(prev => ({ ...prev, [index]: true }));
     };
 
-    const handleVideoLoad = (index: number) => {
-        setVideoErrors(prev => ({ ...prev, [index]: false }));
+    const handleVideoLoadedData = (index: number) => {
+        setVideosLoaded(prev => ({ ...prev, [index]: true }));
+        
+        // En móviles, intentar reproducir inmediatamente después de cargar
+        if (isMobile && videoRefs.current[index]) {
+            const video = videoRefs.current[index];
+            if (video) {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log(`Mobile autoplay failed for video ${index}:`, error);
+                    });
+                }
+            }
+        }
     };
 
     const handleVideoHover = (index: number) => {
         setVideoActivo(index);
         if (videoRefs.current[index] && !videoErrors[index]) {
-            const playPromise = videoRefs.current[index]?.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.warn(`Error playing video ${index + 1}:`, error);
-                    handleVideoError(index);
-                });
+            const video = videoRefs.current[index];
+            if (video) {
+                // En móviles, solo asegurarse de que esté reproduciéndose
+                if (isMobile) {
+                    if (video.paused) {
+                        video.play().catch(console.log);
+                    }
+                } else {
+                    // En desktop, comportamiento normal
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.warn(`Error playing video ${index + 1}:`, error);
+                            handleVideoError(index);
+                        });
+                    }
+                }
             }
         }
     };
 
     const handleVideoLeave = (index: number) => {
         setVideoActivo(null);
-        if (videoRefs.current[index] && !videoErrors[index]) {
+        // En móviles NO pausar los videos al hacer leave
+        if (!isMobile && videoRefs.current[index] && !videoErrors[index]) {
             videoRefs.current[index]?.pause();
         }
     };
@@ -113,7 +166,6 @@ const VideosSection = () => {
 
     const renderMediaContent = (videoData: { src: string; fallback: string; titulo: string; descripcion: string }, index: number) => {
         if (videoErrors[index]) {
-            // Mostrar imagen de fallback si hay error con el video
             return (
                 <div className="relative w-full h-full">
                     <Image
@@ -123,7 +175,6 @@ const VideosSection = () => {
                         width={400}
                         height={600}
                     />
-                    {/* Overlay que simula video */}
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                         <div className="bg-white/90 p-3 rounded-full">
                             <span className="text-2xl">📸</span>
@@ -140,12 +191,21 @@ const VideosSection = () => {
                 }}
                 src={videoData.src}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                muted={videosMuted[index]}
+                muted={true} // Siempre muted para permitir autoplay
                 loop
                 playsInline
-                preload="metadata"
+                autoPlay={true} // Habilitar autoplay
+                preload={isMobile ? "auto" : "metadata"} // preload auto en móviles
                 onError={() => handleVideoError(index)}
-                onLoadedData={() => handleVideoLoad(index)}
+                onLoadedData={() => handleVideoLoadedData(index)}
+                onCanPlay={() => { // Evento adicional para asegurar reproducción
+                    if (isMobile && videoRefs.current[index]) {
+                        const video = videoRefs.current[index];
+                        if (video && video.paused) {
+                            video.play().catch(console.log);
+                        }
+                    }
+                }}
             />
         );
     };
