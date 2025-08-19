@@ -268,7 +268,10 @@ const VideosSection = () => {
                 </div>
 
                 {/* Grid responsivo y simétrico con animaciones direccionales */}
-                <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:auto-rows-fr">
+                <div className={`${isMobile
+                    ? 'flex flex-col gap-6'
+                    : 'flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:auto-rows-fr'
+                    }`}>
                     {/* Video 1 - Grande entrada desde la izquierda */}
                     <div className={`lg:col-span-1 lg:row-span-3 relative group transform transition-all duration-1000 ${videosVisible
                         ? 'translate-x-0 opacity-100 scale-100'
@@ -327,7 +330,7 @@ const VideosSection = () => {
                         }`}
                         style={{ transitionDelay: videosVisible ? '1000ms' : '0ms' }}>
                         <div
-                            className="h-64 md:h-80 lg:h-90 rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.02] hover:rotate-1"
+                            className="h-90 md:h-80 lg:h-90 rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.02] hover:rotate-1"
                             onMouseEnter={() => handleVideoHover(1)}
                             onMouseLeave={() => handleVideoLeave(1)}
                         >
@@ -367,7 +370,7 @@ const VideosSection = () => {
                         }`}
                         style={{ transitionDelay: videosVisible ? '1200ms' : '0ms' }}>
                         <div
-                            className="h-64 md:h-80 lg:h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.05] hover:-rotate-1"
+                            className="h-100 md:h-80 lg:h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.05] hover:-rotate-1"
                             onMouseEnter={() => handleVideoHover(2)}
                             onMouseLeave={() => handleVideoLeave(2)}
                         >
@@ -407,7 +410,7 @@ const VideosSection = () => {
                         }`}
                         style={{ transitionDelay: videosVisible ? '1400ms' : '0ms' }}>
                         <div
-                            className="h-64 md:h-80 lg:h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.05] hover:rotate-1"
+                            className="h-100 md:h-80 lg:h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.05] hover:rotate-1"
                             onMouseEnter={() => handleVideoHover(3)}
                             onMouseLeave={() => handleVideoLeave(3)}
                         >
@@ -447,7 +450,7 @@ const VideosSection = () => {
                         }`}
                         style={{ transitionDelay: videosVisible ? '1600ms' : '0ms' }}>
                         <div
-                            className="h-64 md:h-80 lg:h-90 rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.05] hover:-rotate-1"
+                            className="h-100 md:h-80 lg:h-90 rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer transform hover:scale-[1.05] hover:-rotate-1"
                             onMouseEnter={() => handleVideoHover(4)}
                             onMouseLeave={() => handleVideoLeave(4)}
                         >
