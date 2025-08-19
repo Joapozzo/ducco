@@ -9,6 +9,7 @@ const VideosSection = () => {
     const [ctaVisible, setCtaVisible] = useState(false);
     const [videoErrors, setVideoErrors] = useState<{ [key: number]: boolean }>({});
     const [isMobile, setIsMobile] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [videosLoaded, setVideosLoaded] = useState<{ [key: number]: boolean }>({});
     const sectionRef = useRef(null);
     const [videosMuted, setVideosMuted] = useState<{ [key: number]: boolean }>({
