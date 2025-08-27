@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Producto } from "../types/productType";
-import { Heart, ShoppingCart, Package, Ruler, Percent } from 'lucide-react';
+import { Heart, ShoppingCart, Ruler, Percent } from 'lucide-react';
 
 interface CardProductOfferProps {
     producto: Producto;

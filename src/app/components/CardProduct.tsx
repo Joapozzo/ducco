@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Producto } from "../types/productType";
-import { Heart, ArrowRight, Package } from 'lucide-react';
+import { Heart, ArrowRight } from 'lucide-react';
 
 interface CardProductProps {
     producto: Producto;

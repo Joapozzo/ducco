@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Truck, Shield, Headphones, Star, Package, Ruler } from 'lucide-react';
+import { ArrowLeft, Check, Truck, Shield, Headphones, Ruler } from 'lucide-react';
 import { productos } from '../../../data/ProductStatic';
 import CardProduct from '../../../components/CardProduct';
 import { Producto } from '@/app/types/productType';
