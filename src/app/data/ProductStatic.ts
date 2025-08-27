@@ -3,9 +3,9 @@ import { CategoriaProducto, Producto } from "../types/productType";
 export const productos: Producto[] = [
   {
     id: 1,
-    nombre: "Mesa Ratona Clarity",
-    descripcionCorta: "Mesa de 4 patas con vidrio templado y terminación láser",
-    descripcionCompleta: "Vidrio templado resistente y seguro pegado láser con terminaciones limpias y modernas. Perfecta para espacios contemporáneos y ambientes luminosos. Alta calidad y detalle en cada acabado.",
+    nombre: "Mesa Clarity",
+    descripcionCorta: "Mesa de 1,20 m con vidrio templado y 4 sillas Eclipse en black o stone",
+    descripcionCompleta: "La Mesa Clarity de 1,20 m cuenta con vidrio templado resistente y terminación en pegado láser, ideal para quienes buscan elegancia sin perder funcionalidad. Incluye 4 sillas Eclipse, modernas y cómodas, disponibles en terminaciones black y stone.",
     categoria: "Mesa",
     precio: "Consultar",
     stock: 10,
@@ -15,7 +15,7 @@ export const productos: Producto[] = [
     ],
     dimensiones: {
       ancho: "60 cm",
-      largo: "100 cm"
+      largo: "120 cm"
     },
     esDestacado: true,
     esOferta: true
@@ -117,7 +117,25 @@ export const productos: Producto[] = [
     },
     caracteristicasAdicionales: "Mesa contemporánea de 1,60 x 0,90m con 6 sillas Maitena en madera Guatambú. Lustre y tapizado a elección para que combine perfecto con tu estilo. Calidad que perdura con diseño que enamora.",
     esDestacado: true
-  }
+  },
+  {
+    id: 7,
+    nombre: "Mesa Ratona Clarity",
+    descripcionCorta: "Mesa de 4 patas con vidrio templado y terminación láser",
+    descripcionCompleta: "Vidrio templado resistente y seguro pegado láser con terminaciones limpias y modernas. Perfecta para espacios contemporáneos y ambientes luminosos. Alta calidad y detalle en cada acabado.",
+    categoria: "Mesa",
+    precio: "Consultar",
+    stock: 10,
+    imagenes: [
+      "/imgs/mesas/ratona-clarity-1.png",
+    ],
+    dimensiones: {
+      ancho: "60 cm",
+      largo: "100 cm"
+    },
+    esDestacado: false,
+    esOferta: true
+  },
 ];
 
 export const getProductosPorCategoria = (categoria: CategoriaProducto): Producto[] => {

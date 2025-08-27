@@ -48,13 +48,13 @@ const CardProduct = ({ producto, onProductClick }: CardProductProps) => {
                     </button>
 
                     {/* Indicador de stock */}
-                    <div className="absolute bottom-4 right-4">
+                    {/* <div className="absolute bottom-4 right-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1 ${producto.stock > 5 ? 'bg-green-500' : producto.stock > 0 ? 'bg-yellow-500' : 'bg-red-500'
                             }`}>
                             <Package className="w-3 h-3" />
                             {producto.stock > 0 ? `${producto.stock} disponibles` : 'Sin stock'}
                         </span>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col justify-between">

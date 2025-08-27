@@ -120,26 +120,28 @@ export default function ProductoPage({ params }: PageProps) {
                                 height={500}
                                 className="w-full h-96 lg:h-[500px] object-cover"
                             />
-                            {producto.esDestacado && (
-                                <div className="absolute top-6 left-6">
-                                    <span className="px-4 py-2 rounded-full text-sm font-bold text-white" style={{ backgroundColor: 'var(--ducco-orange)' }}>
-                                        DESTACADO
-                                    </span>
-                                </div>
-                            )}
-                            {producto.esOferta && (
-                                <div className="absolute top-6 left-6">
-                                    <span className="px-4 py-2 rounded-full text-sm font-bold text-white bg-red-500">
-                                        -{producto.descuento} OFF
-                                    </span>
-                                </div>
-                            )}
+                            <div className='flex items-center flex-col gap-2 w-full h-full'>
+                                {producto.esDestacado && (
+                                    <div className="absolute top-6 left-6">
+                                        <span className="px-4 py-2 rounded-full text-sm font-bold text-white" style={{ backgroundColor: 'var(--ducco-orange)' }}>
+                                            DESTACADO
+                                        </span>
+                                    </div>
+                                )}
+                                {producto.esOferta && (
+                                    <div className={`absolute left-6 ${producto.esDestacado ? "top-16" : "top-6"}`}>
+                                        <span className="px-4 py-2 rounded-full text-sm font-bold text-white bg-red-500">
+                                            -{producto.descuento} OFF
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
                             {/* Indicador de stock */}
                             <div className="absolute bottom-6 right-6">
-                                <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-green-500 flex items-center gap-2">
+                                {/* <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-green-500 flex items-center gap-2">
                                     <Package className="w-3 h-3" />
                                     {producto.stock} disponibles
-                                </span>
+                                </span> */}
                             </div>
                         </div>
 
@@ -193,14 +195,14 @@ export default function ProductoPage({ params }: PageProps) {
                         </div>
 
                         {/* Rating ficticio */}
-                        <div className="flex items-center space-x-3">
+                        {/* <div className="flex items-center space-x-3">
                             <div className="flex">
                                 {[...Array(5)].map((_, i) => (
                                     <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                                 ))}
                             </div>
                             <span style={{ color: 'var(--ducco-gray)' }}>(127 reseñas)</span>
-                        </div>
+                        </div> */}
 
                         {/* Precio */}
                         {/* <div className="py-6 border-y border-gray-200">
@@ -301,10 +303,10 @@ export default function ProductoPage({ params }: PageProps) {
                                     <Headphones className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
                                     <span style={{ color: 'var(--ducco-gray)' }}>Atención personalizada especializada</span>
                                 </div>
-                                <div className="flex items-center space-x-3">
+                                {/* <div className="flex items-center space-x-3">
                                     <Package className="w-5 h-5" style={{ color: 'var(--ducco-orange)' }} />
                                     <span style={{ color: 'var(--ducco-gray)' }}>{producto.stock} unidades disponibles en stock</span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
