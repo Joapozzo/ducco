@@ -14,8 +14,9 @@ export type Producto = {
     imagenes: string[];
     variantes?: string;
     dimensiones: {
-        ancho: string;
-        largo: string;
+        ancho?: string;
+        largo?: string;
+        profundidad?: string;
     };
     caracteristicasAdicionales?: string;
     esDestacado?: boolean;

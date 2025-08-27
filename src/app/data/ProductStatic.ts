@@ -136,6 +136,24 @@ export const productos: Producto[] = [
     esDestacado: false,
     esOferta: true
   },
+    {
+    id: 8,
+    nombre: "Sillón Recto Floyd",
+    descripcionCorta: "Sillón recto de 1,75 x 0,90 tapizado en tela Floyd resistente y elegante",
+    descripcionCompleta: "El sillón recto de 1,75 m de ancho por 0,90 m de profundidad combina diseño y confort para tu living o espacio de descanso. Tapizado en tela Floyd, resistente y sofisticada. Podés elegir el color que más se adapte a tu estilo.",
+    categoria: "Sillón",
+    precio: "Consultar",
+    stock: 5,
+    imagenes: [
+      "/imgs/sillones/recto-1.png",
+    ],
+    dimensiones: {
+      largo: "175 cm",
+      ancho: "90 cm"
+    },
+    esDestacado: true,
+    esOferta: false
+  }
 ];
 
 export const getProductosPorCategoria = (categoria: CategoriaProducto): Producto[] => {
